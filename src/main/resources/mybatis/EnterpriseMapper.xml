@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mine.alpha.dao.EnterpriseMapper" >
+  <resultMap id="BaseResultMap" type="com.mine.alpha.model.Enterprise" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pass_salt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="fullname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USCI" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="BSLIC" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email, password, pass_salt, fullname, USCI, BSLIC
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from enterprise
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mine.alpha.model.Enterprise" >
+    insert into enterprise (id, email, password, 
+      pass_salt, fullname, USCI, 
+      BSLIC)
+    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{passSalt,jdbcType=VARCHAR}, #{fullname,jdbcType=VARCHAR}, #{usci,jdbcType=VARCHAR}, 
+      #{bslic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mine.alpha.model.Enterprise" >
+    insert into enterprise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="passSalt != null" >
+        pass_salt,
+      </if>
+      <if test="fullname != null" >
+        fullname,
+      </if>
+      <if test="usci != null" >
+        USCI,
+      </if>
+      <if test="bslic != null" >
+        BSLIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passSalt != null" >
+        #{passSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null" >
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="usci != null" >
+        #{usci,jdbcType=VARCHAR},
+      </if>
+      <if test="bslic != null" >
+        #{bslic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mine.alpha.model.Enterprise" >
+    update enterprise
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passSalt != null" >
+        pass_salt = #{passSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null" >
+        fullname = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="usci != null" >
+        USCI = #{usci,jdbcType=VARCHAR},
+      </if>
+      <if test="bslic != null" >
+        BSLIC = #{bslic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mine.alpha.model.Enterprise" >
+    update enterprise
+    set email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      pass_salt = #{passSalt,jdbcType=VARCHAR},
+      fullname = #{fullname,jdbcType=VARCHAR},
+      USCI = #{usci,jdbcType=VARCHAR},
+      BSLIC = #{bslic,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

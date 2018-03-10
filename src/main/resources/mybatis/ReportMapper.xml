@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mine.alpha.dao.ReportMapper" >
+  <resultMap id="BaseResultMap" type="com.mine.alpha.model.Report" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="prj_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="mining_amount" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="surrounding_rock_mass" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="grade" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dilution" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="loss_rate" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="raw_ore" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="concentrate_quantity" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="sewage" jdbcType="DOUBLE" javaType="java.lang.Double" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mine.alpha.model.Report" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="prj_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="mining_amount" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="surrounding_rock_mass" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="grade" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dilution" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="loss_rate" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="raw_ore" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="concentrate_quantity" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="sewage" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, prj_id, mining_amount, surrounding_rock_mass, grade, dilution, loss_rate, raw_ore, 
+    concentrate_quantity, sewage
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from report
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from report
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mine.alpha.model.Report" >
+    insert into report (id, prj_id, mining_amount, 
+      surrounding_rock_mass, grade, dilution, 
+      loss_rate, raw_ore, concentrate_quantity, 
+      sewage, content)
+    values (#{id,jdbcType=INTEGER}, #{prjId,jdbcType=INTEGER}, #{miningAmount,jdbcType=DOUBLE}, 
+      #{surroundingRockMass,jdbcType=DOUBLE}, #{grade,jdbcType=VARCHAR}, #{dilution,jdbcType=DOUBLE}, 
+      #{lossRate,jdbcType=DOUBLE}, #{rawOre,jdbcType=DOUBLE}, #{concentrateQuantity,jdbcType=DOUBLE}, 
+      #{sewage,jdbcType=DOUBLE}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mine.alpha.model.Report" >
+    insert into report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prjId != null" >
+        prj_id,
+      </if>
+      <if test="miningAmount != null" >
+        mining_amount,
+      </if>
+      <if test="surroundingRockMass != null" >
+        surrounding_rock_mass,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="dilution != null" >
+        dilution,
+      </if>
+      <if test="lossRate != null" >
+        loss_rate,
+      </if>
+      <if test="rawOre != null" >
+        raw_ore,
+      </if>
+      <if test="concentrateQuantity != null" >
+        concentrate_quantity,
+      </if>
+      <if test="sewage != null" >
+        sewage,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prjId != null" >
+        #{prjId,jdbcType=INTEGER},
+      </if>
+      <if test="miningAmount != null" >
+        #{miningAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="surroundingRockMass != null" >
+        #{surroundingRockMass,jdbcType=DOUBLE},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="dilution != null" >
+        #{dilution,jdbcType=DOUBLE},
+      </if>
+      <if test="lossRate != null" >
+        #{lossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="rawOre != null" >
+        #{rawOre,jdbcType=DOUBLE},
+      </if>
+      <if test="concentrateQuantity != null" >
+        #{concentrateQuantity,jdbcType=DOUBLE},
+      </if>
+      <if test="sewage != null" >
+        #{sewage,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mine.alpha.model.Report" >
+    update report
+    <set >
+      <if test="prjId != null" >
+        prj_id = #{prjId,jdbcType=INTEGER},
+      </if>
+      <if test="miningAmount != null" >
+        mining_amount = #{miningAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="surroundingRockMass != null" >
+        surrounding_rock_mass = #{surroundingRockMass,jdbcType=DOUBLE},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="dilution != null" >
+        dilution = #{dilution,jdbcType=DOUBLE},
+      </if>
+      <if test="lossRate != null" >
+        loss_rate = #{lossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="rawOre != null" >
+        raw_ore = #{rawOre,jdbcType=DOUBLE},
+      </if>
+      <if test="concentrateQuantity != null" >
+        concentrate_quantity = #{concentrateQuantity,jdbcType=DOUBLE},
+      </if>
+      <if test="sewage != null" >
+        sewage = #{sewage,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mine.alpha.model.Report" >
+    update report
+    set prj_id = #{prjId,jdbcType=INTEGER},
+      mining_amount = #{miningAmount,jdbcType=DOUBLE},
+      surrounding_rock_mass = #{surroundingRockMass,jdbcType=DOUBLE},
+      grade = #{grade,jdbcType=VARCHAR},
+      dilution = #{dilution,jdbcType=DOUBLE},
+      loss_rate = #{lossRate,jdbcType=DOUBLE},
+      raw_ore = #{rawOre,jdbcType=DOUBLE},
+      concentrate_quantity = #{concentrateQuantity,jdbcType=DOUBLE},
+      sewage = #{sewage,jdbcType=DOUBLE},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mine.alpha.model.Report" >
+    update report
+    set prj_id = #{prjId,jdbcType=INTEGER},
+      mining_amount = #{miningAmount,jdbcType=DOUBLE},
+      surrounding_rock_mass = #{surroundingRockMass,jdbcType=DOUBLE},
+      grade = #{grade,jdbcType=VARCHAR},
+      dilution = #{dilution,jdbcType=DOUBLE},
+      loss_rate = #{lossRate,jdbcType=DOUBLE},
+      raw_ore = #{rawOre,jdbcType=DOUBLE},
+      concentrate_quantity = #{concentrateQuantity,jdbcType=DOUBLE},
+      sewage = #{sewage,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

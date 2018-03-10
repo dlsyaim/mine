@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mine.alpha.dao.ProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.mine.alpha.model.Project" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="date" jdbcType="DATE" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mine.alpha.model.ProjectWithBLOBs" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="date" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="location" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="drilled_holes" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="tunnel" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="statistic" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, enterprise_id, date
+  </sql>
+  <sql id="Blob_Column_List" >
+    location, drilled_holes, tunnel, statistic
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from project
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mine.alpha.model.ProjectWithBLOBs" >
+    insert into project (id, name, enterprise_id, 
+      date, location, drilled_holes, 
+      tunnel, statistic)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{enterpriseId,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{location,jdbcType=LONGVARCHAR}, #{drilledHoles,jdbcType=LONGVARCHAR}, 
+      #{tunnel,jdbcType=LONGVARCHAR}, #{statistic,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mine.alpha.model.ProjectWithBLOBs" >
+    insert into project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="drilledHoles != null" >
+        drilled_holes,
+      </if>
+      <if test="tunnel != null" >
+        tunnel,
+      </if>
+      <if test="statistic != null" >
+        statistic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="drilledHoles != null" >
+        #{drilledHoles,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tunnel != null" >
+        #{tunnel,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="statistic != null" >
+        #{statistic,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mine.alpha.model.ProjectWithBLOBs" >
+    update project
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="drilledHoles != null" >
+        drilled_holes = #{drilledHoles,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tunnel != null" >
+        tunnel = #{tunnel,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="statistic != null" >
+        statistic = #{statistic,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mine.alpha.model.ProjectWithBLOBs" >
+    update project
+    set name = #{name,jdbcType=VARCHAR},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      location = #{location,jdbcType=LONGVARCHAR},
+      drilled_holes = #{drilledHoles,jdbcType=LONGVARCHAR},
+      tunnel = #{tunnel,jdbcType=LONGVARCHAR},
+      statistic = #{statistic,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mine.alpha.model.Project" >
+    update project
+    set name = #{name,jdbcType=VARCHAR},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

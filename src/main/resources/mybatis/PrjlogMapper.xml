@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mine.alpha.dao.PrjlogMapper" >
+  <resultMap id="BaseResultMap" type="com.mine.alpha.model.Prjlog" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="prj_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="dvc_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mine.alpha.model.Prjlog" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="prj_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="dvc_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, prj_id, dvc_id, status, time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from prjlog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from prjlog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mine.alpha.model.Prjlog" >
+    insert into prjlog (id, prj_id, dvc_id, 
+      status, time, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{prjId,jdbcType=INTEGER}, #{dvcId,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mine.alpha.model.Prjlog" >
+    insert into prjlog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prjId != null" >
+        prj_id,
+      </if>
+      <if test="dvcId != null" >
+        dvc_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prjId != null" >
+        #{prjId,jdbcType=INTEGER},
+      </if>
+      <if test="dvcId != null" >
+        #{dvcId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mine.alpha.model.Prjlog" >
+    update prjlog
+    <set >
+      <if test="prjId != null" >
+        prj_id = #{prjId,jdbcType=INTEGER},
+      </if>
+      <if test="dvcId != null" >
+        dvc_id = #{dvcId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mine.alpha.model.Prjlog" >
+    update prjlog
+    set prj_id = #{prjId,jdbcType=INTEGER},
+      dvc_id = #{dvcId,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mine.alpha.model.Prjlog" >
+    update prjlog
+    set prj_id = #{prjId,jdbcType=INTEGER},
+      dvc_id = #{dvcId,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
