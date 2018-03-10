@@ -1,5 +1,7 @@
 package com.mine.alpha.model;
 
+import java.util.List;
+
 public class User {
     private Integer id;
 
@@ -12,6 +14,8 @@ public class User {
     private String email;
 
     private Integer enterpriseId;
+
+    private List<Role> roles;
 
     public User(Integer id, String username, String password, String passSalt, String email, Integer enterpriseId) {
         this.id = id;
@@ -72,5 +76,13 @@ public class User {
 
     public void setEnterpriseId(Integer enterpriseId) {
         this.enterpriseId = enterpriseId;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

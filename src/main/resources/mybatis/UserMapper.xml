@@ -20,6 +20,12 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where id = #{id,jdbcType=INTEGER}
@@ -105,4 +111,26 @@
       enterprise_id = #{enterpriseId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <resultMap id="MapWithRoles" type="com.mine.alpha.model.User" >
+    <collection property="roles" ofType="com.mine.alpha.model.Role">
+      <result column="id" property="id"></result>
+      <result column="name" property="name"></result>
+      <collection property="permissions" ofType="com.mine.alpha.model.Permission">
+        <result column="id" property="id"></result>
+        <result column="name" property="name"></result>
+      </collection>
+    </collection>
+  </resultMap>
+  
+  <select id="auth" resultMap="MapWithRoles" parameterType="java.lang.String">
+    SELECT DISTINCT
+      u.*,r.id,r.name,p.id,p.name
+    FROM user u
+    LEFT JOIN entity_role er ON u.id = er.entity_id
+    LEFT JOIN role r ON er.role_id = r.id
+    LEFT JOIN role_permission rp ON r.id = rp.role_id
+    LEFT JOIN permission p ON rp.permission_id = p.id
+    WHERE username = #{username,jdbcType=VARCHAR}
+  </select>
 </mapper>

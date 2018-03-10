@@ -1,7 +1,9 @@
 package com.mine.alpha.dao;
 
 import com.mine.alpha.model.Enterprise;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface EnterpriseMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -1,11 +1,15 @@
 package com.mine.alpha.model;
 
+import java.util.List;
+
 public class Role {
     private Integer id;
 
-    private Integer name;
+    private String name;
 
-    public Role(Integer id, Integer name) {
+    private List<Permission> permissions;
+
+    public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -22,11 +26,19 @@ public class Role {
         this.id = id;
     }
 
-    public Integer getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Integer name) {
-        this.name = name;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 }
