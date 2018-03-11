@@ -1,13 +1,12 @@
 package com.mine.alpha.config;
 
 import com.mine.alpha.security.JWTFilter;
-import com.mine.alpha.security.UserRealm;
+import com.mine.alpha.security.EntityRealm;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -17,13 +16,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@AutoConfigureAfter(ShiroLifecycleBeanPostProcessorConfig.class)
 public class ShiroConfig {
+    @Bean(name = "lifecycleBeanPostProcessor")
+    public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
     @Bean
     @DependsOn("lifecycleBeanPostProcessor")
-    public UserRealm userRealm(){
-        UserRealm userRealm = new UserRealm();
-        return userRealm;
+    public EntityRealm userRealm(){
+        EntityRealm entityRealm = new EntityRealm();
+        return entityRealm;
     }
 
     @Bean("securityManager")

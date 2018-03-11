@@ -5,6 +5,8 @@ import java.util.List;
 public class User {
     private Integer id;
 
+    private String name;
+
     private String username;
 
     private String password;
@@ -17,8 +19,9 @@ public class User {
 
     private List<Role> roles;
 
-    public User(Integer id, String username, String password, String passSalt, String email, Integer enterpriseId) {
+    public User(Integer id, String name, String username, String password, String passSalt, String email, Integer enterpriseId) {
         this.id = id;
+        this.name = name;
         this.username = username;
         this.password = password;
         this.passSalt = passSalt;
@@ -36,6 +39,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getUsername() {

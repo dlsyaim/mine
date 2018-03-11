@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mine.alpha.model.User" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="pass_salt" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -12,7 +13,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, pass_salt, email, enterprise_id
+    id, name, username, password, pass_salt, email, enterprise_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -20,7 +21,7 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from user
@@ -31,18 +32,21 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.mine.alpha.model.User" >
-    insert into user (id, username, password, 
-      pass_salt, email, enterprise_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{passSalt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{enterpriseId,jdbcType=INTEGER}
-      )
+    insert into user (id, name, username, 
+      password, pass_salt, email, 
+      enterprise_id)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{passSalt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{enterpriseId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mine.alpha.model.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="name != null" >
+        name,
       </if>
       <if test="username != null" >
         username,
@@ -64,6 +68,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
@@ -84,6 +91,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mine.alpha.model.User" >
     update user
     <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
       </if>
@@ -104,7 +114,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mine.alpha.model.User" >
     update user
-    set username = #{username,jdbcType=VARCHAR},
+    set name = #{name,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       pass_salt = #{passSalt,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
@@ -112,20 +123,20 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <resultMap id="MapWithRoles" type="com.mine.alpha.model.User" >
-    <collection property="roles" ofType="com.mine.alpha.model.Role">
-      <result column="id" property="id"></result>
-      <result column="name" property="name"></result>
-      <collection property="permissions" ofType="com.mine.alpha.model.Permission">
-        <result column="id" property="id"></result>
-        <result column="name" property="name"></result>
+  <resultMap id="MapWithRoles" type="com.mine.alpha.model.User">
+    <collection ofType="com.mine.alpha.model.Role" property="roles">
+      <result column="id" property="id" />
+      <result column="name" property="name" />
+      <collection ofType="com.mine.alpha.model.Permission" property="permissions">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
       </collection>
     </collection>
   </resultMap>
-  
-  <select id="auth" resultMap="MapWithRoles" parameterType="java.lang.String">
+
+  <select id="auth" parameterType="java.lang.String" resultMap="MapWithRoles">
     SELECT DISTINCT
-      u.*,r.id,r.name,p.id,p.name
+    u.*,r.id,r.name,p.id,p.name
     FROM user u
     LEFT JOIN entity_role er ON u.id = er.entity_id
     LEFT JOIN role r ON er.role_id = r.id

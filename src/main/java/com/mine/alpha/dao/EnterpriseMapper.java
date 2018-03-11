@@ -13,6 +13,10 @@ public interface EnterpriseMapper {
 
     Enterprise selectByPrimaryKey(Integer id);
 
+    Enterprise selectByUsername(String username);
+
+    Enterprise auth(String username);
+
     int updateByPrimaryKeySelective(Enterprise record);
 
     int updateByPrimaryKey(Enterprise record);

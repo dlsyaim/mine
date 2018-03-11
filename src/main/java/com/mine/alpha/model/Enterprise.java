@@ -1,7 +1,11 @@
 package com.mine.alpha.model;
 
+import java.util.List;
+
 public class Enterprise {
     private Integer id;
+
+    private String username;
 
     private String email;
 
@@ -15,8 +19,11 @@ public class Enterprise {
 
     private String bslic;
 
-    public Enterprise(Integer id, String email, String password, String passSalt, String fullname, String usci, String bslic) {
+    private List<Role> roles;
+
+    public Enterprise(Integer id, String username, String email, String password, String passSalt, String fullname, String usci, String bslic) {
         this.id = id;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.passSalt = passSalt;
@@ -35,6 +42,14 @@ public class Enterprise {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
     public String getEmail() {
@@ -83,5 +98,13 @@ public class Enterprise {
 
     public void setBslic(String bslic) {
         this.bslic = bslic == null ? null : bslic.trim();
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

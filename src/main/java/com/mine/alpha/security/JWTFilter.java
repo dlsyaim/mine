@@ -16,6 +16,8 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         if (auth != null){
             String[] array = auth.split(" ");
             try {
+                JWTToken token = new JWTToken(array[0],array[1]);
+                getSubject(request,response).login(token);
                 return true;
             }catch (Exception e){
                 e.printStackTrace();

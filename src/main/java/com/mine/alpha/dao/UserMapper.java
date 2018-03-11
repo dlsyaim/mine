@@ -1,10 +1,7 @@
 package com.mine.alpha.dao;
 
-import com.mine.alpha.model.Role;
 import com.mine.alpha.model.User;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface UserMapper {
